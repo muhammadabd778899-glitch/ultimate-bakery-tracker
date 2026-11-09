@@ -169,7 +169,7 @@ export function OrdersPage() {
             <TextInput type="date" className="!w-auto" value={to} onChange={(e) => setTo(e.target.value)} />
           </div>
           <label className="flex items-center gap-2 text-[13px] text-muted pb-2.5 cursor-pointer">
-            <input type="checkbox" className="accent-[#E8A3BA]" checked={includeArchived} onChange={(e) => setIncludeArchived(e.target.checked)} />
+            <input type="checkbox" className="accent-[#E35683]" checked={includeArchived} onChange={(e) => setIncludeArchived(e.target.checked)} />
             Include archived
           </label>
           {filtersActive && (

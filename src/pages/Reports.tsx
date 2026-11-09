@@ -16,7 +16,7 @@ import { formatDisplayDate, todayKey, addDays } from '../lib/dates'
 import { formatMoney, getDateFormat } from '../lib/format'
 import { exportCsv, exportPdf, printHtml } from '../lib/exporters'
 
-const BARS = ['#E8A3BA', '#C96F91', '#75A98A', '#E4AD65', '#D77A83', '#F0C0D1', '#8D7D85', '#DE8CAA', '#B25A7B']
+const BARS = ['#E35683', '#F59E6B', '#F4C95D', '#58C99A', '#62B4E8', '#A78BFA', '#EF7C6B', '#F1789E', '#3FA372']
 
 type Tab = 'sales' | 'orders' | 'profit' | 'inventory' | 'production' | 'customers'
 
@@ -298,11 +298,11 @@ function SalesTab({
         <div className="h-[260px] -ml-2">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={byPeriod} margin={{ top: 8, right: 8, left: 0, bottom: 4 }}>
-              <CartesianGrid stroke="#F0DDE4" vertical={false} />
-              <XAxis dataKey="period" tick={{ fontSize: 10.5, fill: '#8D7D85' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-              <YAxis tick={{ fontSize: 11, fill: '#8D7D85' }} tickLine={false} axisLine={false} width={54} tickFormatter={(v: number) => formatMoney(v, { compact: true })} />
-              <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F0DDE4', fontSize: 12 }} formatter={(v: number) => [formatMoney(v), 'Revenue']} />
-              <Bar dataKey="revenue" radius={[6, 6, 0, 0]} fill="#E8A3BA" />
+              <CartesianGrid stroke="#F5E6DC" vertical={false} />
+              <XAxis dataKey="period" tick={{ fontSize: 10.5, fill: '#8A6F7B' }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
+              <YAxis tick={{ fontSize: 11, fill: '#8A6F7B' }} tickLine={false} axisLine={false} width={54} tickFormatter={(v: number) => formatMoney(v, { compact: true })} />
+              <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F1E0D6', fontSize: 12, boxShadow: '0 12px 30px -18px rgba(61,38,51,.4)' }} formatter={(v: number) => [formatMoney(v), 'Revenue']} />
+              <Bar dataKey="revenue" radius={[8, 8, 2, 2]} fill="#E35683" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -332,10 +332,10 @@ function SalesTab({
             <div className="h-[240px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={byCategory} layout="vertical" margin={{ top: 4, right: 12, left: 0, bottom: 4 }}>
-                  <CartesianGrid stroke="#F0DDE4" horizontal={false} />
-                  <XAxis type="number" tick={{ fontSize: 11, fill: '#8D7D85' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => formatMoney(v, { compact: true })} />
-                  <YAxis type="category" dataKey="category" tick={{ fontSize: 11, fill: '#8D7D85' }} tickLine={false} axisLine={false} width={90} />
-                  <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F0DDE4', fontSize: 12 }} formatter={(v: number) => [formatMoney(v), 'Revenue']} />
+                  <CartesianGrid stroke="#F5E6DC" horizontal={false} />
+                  <XAxis type="number" tick={{ fontSize: 11, fill: '#8A6F7B' }} tickLine={false} axisLine={false} tickFormatter={(v: number) => formatMoney(v, { compact: true })} />
+                  <YAxis type="category" dataKey="category" tick={{ fontSize: 11, fill: '#8A6F7B' }} tickLine={false} axisLine={false} width={90} />
+                  <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F1E0D6', fontSize: 12, boxShadow: '0 12px 30px -18px rgba(61,38,51,.4)' }} formatter={(v: number) => [formatMoney(v), 'Revenue']} />
                   <Bar dataKey="revenue" radius={[0, 6, 6, 0]}>
                     {byCategory.map((_, i) => (
                       <Cell key={i} fill={BARS[i % BARS.length]} />
@@ -621,10 +621,10 @@ function ProductionTab({ prod }: { prod: ReturnType<typeof productionReport> }) 
             <div className="h-[240px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 4 }}>
-                  <CartesianGrid stroke="#F0DDE4" vertical={false} />
-                  <XAxis dataKey="status" tick={{ fontSize: 10.5, fill: '#8D7D85' }} tickLine={false} axisLine={false} interval={0} />
-                  <YAxis tick={{ fontSize: 11, fill: '#8D7D85' }} tickLine={false} axisLine={false} width={40} allowDecimals={false} />
-                  <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F0DDE4', fontSize: 12 }} />
+                  <CartesianGrid stroke="#F5E6DC" vertical={false} />
+                  <XAxis dataKey="status" tick={{ fontSize: 10.5, fill: '#8A6F7B' }} tickLine={false} axisLine={false} interval={0} />
+                  <YAxis tick={{ fontSize: 11, fill: '#8A6F7B' }} tickLine={false} axisLine={false} width={40} allowDecimals={false} />
+                  <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F1E0D6', fontSize: 12, boxShadow: '0 12px 30px -18px rgba(61,38,51,.4)' }} />
                   <Bar dataKey="count" radius={[6, 6, 0, 0]}>
                     {data.map((_, i) => (
                       <Cell key={i} fill={BARS[i % BARS.length]} />

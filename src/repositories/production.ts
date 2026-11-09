@@ -58,7 +58,7 @@ function allocateBatchNo(): string {
     const m = /(\d+)$/.exec(r.batch_no)
     if (m) max = Math.max(max, parseInt(m[1], 10))
   }
-  return nextBatchNo(max)
+  return nextBatchNo(max + 1)
 }
 
 export interface BatchDraft {

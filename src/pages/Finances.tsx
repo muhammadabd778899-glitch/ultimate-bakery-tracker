@@ -18,7 +18,7 @@ import { formatDisplayDate, todayKey, addDays } from '../lib/dates'
 import { formatMoney, getDateFormat } from '../lib/format'
 import { exportCsv } from '../lib/exporters'
 
-const BARS = ['#E8A3BA', '#C96F91', '#75A98A', '#E4AD65', '#D77A83', '#F0C0D1', '#8D7D85', '#DE8CAA', '#B25A7B']
+const BARS = ['#E35683', '#F59E6B', '#F4C95D', '#58C99A', '#62B4E8', '#A78BFA', '#EF7C6B', '#F1789E', '#3FA372']
 
 export function FinancesPage() {
   const [params, setParams] = useSearchParams()
@@ -157,10 +157,10 @@ export function FinancesPage() {
                 <div className="h-[260px] -ml-2">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={breakdown} margin={{ top: 8, right: 8, left: 0, bottom: 4 }}>
-                      <CartesianGrid stroke="#F0DDE4" vertical={false} />
-                      <XAxis dataKey="category" tick={{ fontSize: 10.5, fill: '#8D7D85' }} tickLine={false} axisLine={false} interval={0} angle={-14} textAnchor="end" height={56} />
-                      <YAxis tick={{ fontSize: 11, fill: '#8D7D85' }} tickLine={false} axisLine={false} width={54} tickFormatter={(v: number) => formatMoney(v, { compact: true })} />
-                      <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F0DDE4', fontSize: 12 }} formatter={(v: number) => [formatMoney(v), 'Spent']} />
+                      <CartesianGrid stroke="#F5E6DC" vertical={false} />
+                      <XAxis dataKey="category" tick={{ fontSize: 10.5, fill: '#8A6F7B' }} tickLine={false} axisLine={false} interval={0} angle={-14} textAnchor="end" height={56} />
+                      <YAxis tick={{ fontSize: 11, fill: '#8A6F7B' }} tickLine={false} axisLine={false} width={54} tickFormatter={(v: number) => formatMoney(v, { compact: true })} />
+                      <RTooltip contentStyle={{ borderRadius: 12, border: '1px solid #F5E6DC', fontSize: 12 }} formatter={(v: number) => [formatMoney(v), 'Spent']} />
                       <Bar dataKey="total" radius={[6, 6, 0, 0]}>
                         {breakdown.map((_, i) => (
                           <Cell key={i} fill={BARS[i % BARS.length]} />

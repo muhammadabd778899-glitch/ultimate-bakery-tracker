@@ -3,7 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, ClipboardList, Users, Cake, BookOpen, Boxes, Factory, CalendarDays,
   Truck, Wallet, BarChart3, Settings as Cog, ChevronsLeft, ChevronsRight, Plus, Bell,
-  Search, DatabaseBackup, Trash2, X, PackageOpen,
+  Search, Trash2, X, PackageOpen, Menu,
 } from 'lucide-react'
 import { useApp } from '../store/app'
 import { useLive } from '../lib/useLive'
@@ -13,19 +13,19 @@ import { getDateFormat } from '../lib/format'
 import { Modal, Badge, EmptyState, STATUS_TONE } from '../components/ui'
 
 const NAV = [
-  { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
-  { to: '/orders', label: 'Orders', icon: ClipboardList },
-  { to: '/customers', label: 'Customers', icon: Users },
-  { to: '/products', label: 'Products & Menu', icon: Cake },
-  { to: '/recipes', label: 'Recipes', icon: BookOpen },
-  { to: '/inventory', label: 'Inventory', icon: Boxes },
-  { to: '/production', label: 'Production', icon: Factory },
-  { to: '/waste', label: 'Waste', icon: Trash2 },
-  { to: '/calendar', label: 'Calendar & Tasks', icon: CalendarDays },
-  { to: '/suppliers', label: 'Suppliers', icon: Truck },
-  { to: '/finances', label: 'Finances', icon: Wallet },
-  { to: '/reports', label: 'Reports', icon: BarChart3 },
-  { to: '/settings', label: 'Settings', icon: Cog },
+  { to: '/', label: 'Overview', icon: LayoutDashboard, end: true, accent: '#FBA3BE' },
+  { to: '/orders', label: 'Orders', icon: ClipboardList, accent: '#F9B98C' },
+  { to: '/customers', label: 'Customers', icon: Users, accent: '#F8D98A' },
+  { to: '/products', label: 'Products & Menu', icon: Cake, accent: '#C4B5FD' },
+  { to: '/recipes', label: 'Recipes', icon: BookOpen, accent: '#9ED2F2' },
+  { to: '/inventory', label: 'Inventory', icon: Boxes, accent: '#9CE2C4' },
+  { to: '/production', label: 'Production', icon: Factory, accent: '#F5A3B9' },
+  { to: '/waste', label: 'Waste', icon: Trash2, accent: '#F6A290' },
+  { to: '/calendar', label: 'Calendar & Tasks', icon: CalendarDays, accent: '#9ED2F2' },
+  { to: '/suppliers', label: 'Suppliers', icon: Truck, accent: '#F9C98E' },
+  { to: '/finances', label: 'Finances', icon: Wallet, accent: '#9CE2C4' },
+  { to: '/reports', label: 'Reports', icon: BarChart3, accent: '#F8D98A' },
+  { to: '/settings', label: 'Settings', icon: Cog, accent: '#D9B8C6' },
 ]
 
 interface Hit {
@@ -42,6 +42,7 @@ export function AppShell() {
   const [paletteOpen, setPaletteOpen] = useState(false)
   const [quickOpen, setQuickOpen] = useState(false)
   const [bellOpen, setBellOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
 
   const alerts = useLive(() => {
@@ -71,6 +72,7 @@ export function AppShell() {
         setPaletteOpen(false)
         setQuickOpen(false)
         setBellOpen(false)
+        setMobileOpen(false)
       }
     }
     window.addEventListener('keydown', onKey)
@@ -91,72 +93,117 @@ export function AppShell() {
     <div className="min-h-screen flex bg-pale">
       {/* ---------------- Sidebar ---------------- */}
       <aside
-        className={`no-print fixed lg:static inset-y-0 left-0 z-40 flex flex-col bg-white border-r border-line transition-all duration-200 ${
-          collapsed ? 'w-[68px]' : 'w-[232px]'
-        } ${collapsed ? '' : 'max-lg:w-[232px]'}`}
-        style={{ transform: undefined }}
+        className={`no-print sidebar-shell fixed lg:static inset-y-0 left-0 z-40 flex flex-col border-r border-white/10 transition-all duration-200 w-[232px] ${
+          collapsed ? 'lg:w-[68px]' : ''
+        } ${mobileOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
       >
-        <div className="h-16 flex items-center gap-2.5 px-4 border-b border-line shrink-0">
-          <div className="w-9 h-9 rounded-xl bg-pink-400 text-white grid place-items-center shrink-0 font-display text-lg leading-none">
-            B
+        <div className="relative h-16 flex items-center gap-2.5 px-4 border-b border-white/10 shrink-0 overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 sidebar-sprinkles opacity-40" />
+          <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[#F8D98A] via-[#F1789E] to-[#C93E6B] shadow-[0_8px_20px_-8px_rgba(0,0,0,0.6)] ring-1 ring-white/30 grid place-items-center shrink-0">
+            <Cake size={19} className="text-white drop-shadow-[0_1px_2px_rgba(90,26,46,0.5)]" />
           </div>
-          {!collapsed && (
-            <div className="min-w-0">
-              <p className="font-display text-[15px] leading-tight text-ink truncate">
-                {settings?.bakery_name || 'Bakery Tracker'}
-              </p>
-              <p className="text-[10.5px] text-muted leading-tight">Ultimate Bakery Tracker</p>
-            </div>
-          )}
+          <div className={`relative min-w-0 ${collapsed ? 'lg:hidden' : ''}`}>
+            <p className="font-display text-[15px] leading-tight text-white truncate">
+              {settings?.bakery_name || 'Bakery Tracker'}
+            </p>
+            <p className="text-[9px] uppercase tracking-[0.12em] text-[#F9C9D8]/70 leading-tight mt-0.5 whitespace-nowrap">
+              Premium offline suite
+            </p>
+          </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
+        <p
+          className={`px-5 pt-4 pb-1.5 text-[9.5px] uppercase tracking-[0.18em] text-white/40 font-semibold ${
+            collapsed ? 'lg:hidden' : ''
+          }`}
+        >
+          Bakery workspace
+        </p>
+
+        <nav className="relative flex-1 overflow-y-auto py-1.5 px-2 space-y-0.5">
           {NAV.map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.end}
               onClick={() => {
-                if (window.innerWidth < 1024) toggle()
+                if (window.innerWidth < 1024) setMobileOpen(false)
               }}
               title={collapsed ? n.label : undefined}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-3 h-10 text-sm font-medium transition-colors ${
-                  isActive ? 'bg-pink-100 text-pink-700' : 'text-muted hover:bg-pink-50 hover:text-ink'
+                `group relative flex items-center gap-3 rounded-xl px-3 h-10 text-sm font-medium transition-all ${
+                  isActive
+                    ? 'bg-white/[0.13] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]'
+                    : 'text-[#F3DDE5]/75 hover:bg-white/[0.07] hover:text-white'
                 }`
               }
             >
-              <n.icon size={17} className="shrink-0" />
-              {!collapsed && <span className="truncate">{n.label}</span>}
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <span
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full"
+                      style={{ background: n.accent }}
+                    />
+                  )}
+                  <span
+                    className="shrink-0 transition-transform group-hover:scale-110"
+                    style={{ color: isActive ? '#FFFFFF' : n.accent }}
+                  >
+                    <n.icon size={17} />
+                  </span>
+                  <span className={`truncate ${collapsed ? 'lg:hidden' : ''}`}>{n.label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
 
-        <div className="p-2 border-t border-line shrink-0">
+        <div className="p-2 border-t border-white/10 shrink-0">
           <button
-            className="w-full flex items-center gap-3 rounded-xl px-3 h-9 text-[12.5px] text-muted hover:bg-pink-50 hover:text-ink transition"
-            onClick={toggle}
+            className="w-full flex items-center gap-3 rounded-xl px-3 h-9 text-[12.5px] text-[#F3DDE5]/65 hover:bg-white/10 hover:text-white transition"
+            onClick={() => {
+              if (window.innerWidth < 1024) setMobileOpen(false)
+              else toggle()
+            }}
           >
-            {collapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
-            {!collapsed && <span>Collapse</span>}
+            <ChevronsRight size={16} className={collapsed ? 'hidden lg:block' : 'hidden'} />
+            <ChevronsLeft size={16} className={collapsed ? 'lg:hidden' : ''} />
+            <span className={collapsed ? 'lg:hidden' : ''}>Collapse</span>
           </button>
         </div>
       </aside>
 
-      {collapsed && <div className="hidden lg:block" />}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-[35] bg-ink/40 backdrop-blur-[2px] lg:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
 
       {/* ---------------- Main ---------------- */}
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="no-print h-16 sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-line flex items-center gap-3 px-4 sm:px-6">
-          <div className="hidden sm:block text-[13px] text-muted tnum">{formatDisplayDate(todayKey(), getDateFormat())}</div>
+        <header className="no-print h-16 sticky top-0 z-30 bg-[#FFF8F3]/85 backdrop-blur-xl border-b border-line flex items-center gap-2 sm:gap-3 px-3 sm:px-6">
+          <button
+            className="lg:hidden w-9 h-9 shrink-0 rounded-xl border border-line bg-white/75 grid place-items-center text-ink hover:bg-pink-50 transition"
+            onClick={() => setMobileOpen(true)}
+            title="Open menu"
+            aria-label="Open menu"
+          >
+            <Menu size={17} />
+          </button>
+          <div className="hidden md:flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/75 border border-line text-[12px] text-muted tnum shrink-0">
+            <CalendarDays size={13} className="text-pink-500" />
+            {formatDisplayDate(todayKey(), getDateFormat())}
+          </div>
 
           <button
-            className="flex-1 max-w-md flex items-center gap-2 h-9 rounded-xl border border-line bg-pale px-3 text-[13px] text-muted hover:border-pink-300 transition"
+            className="flex-1 min-w-0 max-w-md flex items-center gap-2 h-9 rounded-full border border-line bg-white/75 px-3.5 text-[13px] text-muted hover:border-pink-300 hover:bg-white transition"
             onClick={() => setPaletteOpen(true)}
           >
-            <Search size={14} />
+            <Search size={14} className="text-pink-500 shrink-0" />
             <span className="truncate">Search orders, customers, products…</span>
-            <kbd className="ml-auto text-[10px] border border-line rounded px-1.5 py-0.5 bg-white hidden sm:block">Ctrl K</kbd>
+            <kbd className="ml-auto text-[10px] border border-line rounded-full px-1.5 py-0.5 bg-cream text-muted hidden sm:block">Ctrl K</kbd>
           </button>
 
           <div className="flex items-center gap-1.5 ml-auto">
@@ -258,9 +305,10 @@ export function AppShell() {
           <Outlet />
         </main>
 
-        <footer className="no-print px-6 py-3 border-t border-line text-[11.5px] text-muted flex flex-wrap gap-x-4 gap-y-1 bg-white/60">
+        <footer className="no-print px-6 py-3 border-t border-line text-[11.5px] text-muted flex flex-wrap gap-x-4 gap-y-1 bg-white/55 backdrop-blur">
           <span className="inline-flex items-center gap-1.5">
-            <DatabaseBackup size={13} className="text-ok" /> Local database · saved on this device
+            <span className="w-2 h-2 rounded-full bg-mint shadow-[0_0_0_3px_rgba(88,201,154,0.18)]" />
+            Local database · saved on this device
           </span>
           <span>{settings?.bakery_name ? `${settings.bakery_name} · ` : ''}Works fully offline</span>
         </footer>

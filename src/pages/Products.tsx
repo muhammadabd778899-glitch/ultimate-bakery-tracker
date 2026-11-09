@@ -19,6 +19,15 @@ import { getSettings } from '../repositories/settings'
 import { formatMoney, formatPct } from '../lib/format'
 import { exportCsv } from '../lib/exporters'
 
+const PRODUCT_TINTS = [
+  'from-[#FFE1EA] via-[#FFF3E6] to-[#FFF9F4] text-[#C93E6B]',
+  'from-[#FFF0CC] via-[#FFF7E0] to-[#FFFDF6] text-[#B07A17]',
+  'from-[#E4F6EC] via-[#F2FBF6] to-[#FBFFFD] text-[#2F7A56]',
+  'from-[#E4F2FC] via-[#F2F9FE] to-[#FBFFFF] text-[#2A6F9B]',
+  'from-[#F1EBFF] via-[#F8F5FF] to-[#FDFCFF] text-[#7B5CD6]',
+  'from-[#FFE9E4] via-[#FFF4EF] to-[#FFFBF8] text-[#C8545F]',
+]
+
 const schema = z.object({
   name: z.string().trim().min(1, 'Product name is required'),
   category_id: z.coerce.number().optional().nullable(),
@@ -162,12 +171,15 @@ export function ProductsPage() {
         </Card>
       ) : view === 'gallery' ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {products.map((p) => {
+          {products.map((p, i) => {
             const c = costing[p.id]
             return (
-              <Card key={p.id} className="p-0 overflow-hidden flex flex-col">
-                <div className="h-24 bg-gradient-to-br from-pink-100 to-pale grid place-items-center text-3xl border-b border-line">
-                  <Cake size={30} className="text-pink-400" />
+              <Card key={p.id} className="card-lift p-0 overflow-hidden flex flex-col">
+                <div className={`relative h-24 bg-gradient-to-br ${PRODUCT_TINTS[i % PRODUCT_TINTS.length]} grid place-items-center border-b border-line overflow-hidden`}>
+                  <span className="absolute -left-5 -top-8 w-20 h-20 rounded-full bg-white/45" />
+                  <span className="absolute right-2 -bottom-5 w-14 h-14 rounded-full bg-white/35" />
+                  <span className="absolute left-1/2 top-2 w-1.5 h-1.5 rounded-full bg-white/70" />
+                  <Cake size={31} className="relative drop-shadow-sm" />
                 </div>
                 <div className="p-4 flex-1 flex flex-col">
                   <div className="flex items-start justify-between gap-2">

@@ -126,7 +126,7 @@ export function InventoryPage() {
             ))}
           </SelectInput>
           <label className="flex items-center gap-2 text-[13px] text-muted cursor-pointer">
-            <input type="checkbox" className="accent-[#E8A3BA]" checked={onlyLow} onChange={(e) => setOnlyLow(e.target.checked)} />
+            <input type="checkbox" className="accent-[#E35683]" checked={onlyLow} onChange={(e) => setOnlyLow(e.target.checked)} />
             Only low stock
           </label>
         </div>

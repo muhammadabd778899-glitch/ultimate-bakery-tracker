@@ -77,7 +77,7 @@ export function CustomersPage() {
         <div className="flex flex-wrap gap-3 items-center">
           <SearchInput value={search} onChange={setSearch} placeholder="Name, phone or email…" className="w-full sm:w-72" />
           <label className="flex items-center gap-2 text-[13px] text-muted cursor-pointer">
-            <input type="checkbox" className="accent-[#E8A3BA]" checked={showArchived} onChange={(e) => setShowArchived(e.target.checked)} />
+            <input type="checkbox" className="accent-[#E35683]" checked={showArchived} onChange={(e) => setShowArchived(e.target.checked)} />
             Include archived
           </label>
         </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Cake, PartyPopper, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Cake, PartyPopper, ArrowRight, ArrowLeft, Sparkles } from 'lucide-react'
 import { updateSettings, getSettings, DEFAULT_SETTINGS } from '../repositories/settings'
 import { useApp } from '../store/app'
 import { Field, TextInput, SelectInput, ErrorNote } from '../components/ui'
@@ -78,55 +78,83 @@ export function OnboardingPage() {
   return (
     <div className="min-h-screen bg-pale grid lg:grid-cols-2">
       {/* brand panel */}
-      <div className="hidden lg:flex flex-col justify-between p-10 bg-gradient-to-b from-pink-100 to-pale border-r border-line">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-pink-400 text-white grid place-items-center font-display text-xl">B</div>
+      <div className="relative hidden lg:flex flex-col justify-between p-10 sidebar-shell border-r border-white/10 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 sidebar-sprinkles opacity-40" />
+        <div className="pointer-events-none absolute -left-24 top-1/3 w-72 h-72 rounded-full bg-mint/15 blur-3xl" />
+        <div className="pointer-events-none absolute right-0 top-0 w-64 h-64 rounded-full bg-butter/20 blur-3xl" />
+        <div className="relative flex items-center gap-3">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F8D98A] via-[#F1789E] to-[#C93E6B] shadow-[0_10px_24px_-10px_rgba(0,0,0,0.65)] ring-1 ring-white/30 grid place-items-center">
+            <Cake size={20} className="text-white drop-shadow" />
+          </div>
           <div>
-            <p className="font-display text-lg leading-tight">Ultimate Bakery Tracker</p>
-            <p className="text-xs text-muted">Your entire bakery. One beautiful offline workspace.</p>
+            <p className="font-display text-lg leading-tight text-white">Ultimate Bakery Tracker</p>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#F9C9D8]/70 mt-0.5">Your entire bakery, offline</p>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <h1 className="font-display text-4xl leading-tight text-ink">
+        <div className="relative space-y-6 max-w-md">
+          <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] font-semibold text-[#F8D98A]">
+            <Sparkles size={13} /> Premium bakery workspace
+          </span>
+          <h1 className="font-display text-[40px] leading-[1.08] text-white">
             Customer → Order → Recipe → Production → Inventory → Profit.
           </h1>
-          <ul className="space-y-3 text-sm text-ink">
+          <p className="text-[13.5px] text-[#F3DDE5]/75 leading-relaxed">
+            One warm, colourful workspace for the whole bakery — from the first quote to the last receipt.
+          </p>
+          <ul className="space-y-3 text-sm text-[#F8EDF1]">
             {[
-              'Real recipe costing with packaging, labour and overhead',
-              'Production that consumes ingredients exactly once',
-              'Auditable stock ledger — nothing changes silently',
-              'Orders, payments, expenses and reports that agree with each other',
-              'Everything stored locally. No account, no cloud, no internet.',
+              { text: 'Real recipe costing with packaging, labour and overhead', tint: 'from-[#9CE2C4] to-[#3FA372]' },
+              { text: 'Production that consumes ingredients exactly once', tint: 'from-[#FBA3BE] to-[#C93E6B]' },
+              { text: 'Auditable stock ledger — nothing changes silently', tint: 'from-[#F8D98A] to-[#E7A13B]' },
+              { text: 'Orders, payments, expenses and reports that agree', tint: 'from-[#9ED2F2] to-[#2A6F9B]' },
+              { text: 'Everything stored locally. No account, no cloud, no internet.', tint: 'from-[#C4B5FD] to-[#7B5CD6]' },
             ].map((t) => (
-              <li key={t} className="flex gap-2.5 items-start">
-                <span className="w-5 h-5 rounded-full bg-white text-pink-600 grid place-items-center shrink-0 mt-0.5 text-[11px] font-semibold">
+              <li key={t.text} className="flex gap-2.5 items-start">
+                <span className={`w-5 h-5 rounded-full bg-gradient-to-br ${t.tint} text-white grid place-items-center shrink-0 mt-0.5 text-[11px] font-bold shadow-sm`}>
                   ✓
                 </span>
-                {t}
+                {t.text}
               </li>
             ))}
           </ul>
         </div>
 
-        <p className="text-xs text-muted">
-          Takes about a minute. Every setting can be changed later in Settings.
-        </p>
+        <div className="relative flex items-end justify-between gap-4">
+          <p className="text-xs text-[#F3DDE5]/55 max-w-[220px]">
+            Takes about a minute. Every setting can be changed later in Settings.
+          </p>
+          <div className="pointer-events-none -mb-8 -mr-6 animate-floaty opacity-95">
+            <OnboardingCupcake />
+          </div>
+        </div>
       </div>
 
       {/* form */}
       <div className="flex items-center justify-center p-6 sm:p-10">
         <div className="w-full max-w-lg">
+          {/* mobile brand */}
+          <div className="lg:hidden flex items-center gap-2.5 mb-7">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#F8D98A] via-[#F1789E] to-[#C93E6B] grid place-items-center shadow-glow">
+              <Cake size={19} className="text-white" />
+            </div>
+            <div>
+              <p className="font-display text-[16px] leading-tight">Ultimate Bakery Tracker</p>
+              <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Your entire bakery, offline</p>
+            </div>
+          </div>
+
           <div className="flex items-center gap-2 mb-7">
             {STEPS.map((s, i) => (
               <div key={s} className="flex-1">
-                <div className={`h-1 rounded-full ${i <= step ? 'bg-pink-400' : 'bg-line'}`} />
-                <p className={`text-[11px] mt-1.5 ${i === step ? 'text-ink font-medium' : 'text-muted'}`}>{s}</p>
+                <div className={`h-1.5 rounded-full ${i <= step ? 'bg-gradient-to-r from-[#F1789E] to-[#C93E6B]' : 'bg-line'}`} />
+                <p className={`text-[11px] mt-1.5 ${i === step ? 'text-ink font-semibold' : 'text-muted'}`}>{s}</p>
               </div>
             ))}
           </div>
 
-          <div className="card p-6">
+          <div className="card p-6 relative overflow-hidden">
+            <span className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#F4C95D] via-[#F1789E] to-[#C93E6B]" />
             {step === 0 && (
               <div className="space-y-4">
                 <div className="flex items-center gap-2 mb-1">
@@ -232,7 +260,9 @@ export function OnboardingPage() {
                           key={d}
                           type="button"
                           className={`h-9 px-3 rounded-xl text-[13px] border transition ${
-                            active ? 'bg-pink-400 text-white border-pink-400' : 'bg-white text-muted border-line hover:border-pink-300'
+                            active
+                              ? 'bg-gradient-to-r from-[#F1789E] to-[#C93E6B] text-white border-transparent shadow-sm'
+                              : 'bg-white text-muted border-line hover:border-pink-300'
                           }`}
                           onClick={() =>
                             set(
@@ -284,7 +314,7 @@ export function OnboardingPage() {
                 <label className="flex items-start gap-2.5 text-sm text-ink cursor-pointer">
                   <input
                     type="checkbox"
-                    className="mt-0.5 accent-[#E8A3BA]"
+                    className="mt-0.5 accent-[#E35683]"
                     checked={form.low_stock_warnings === 1}
                     onChange={(e) => set('low_stock_warnings', e.target.checked ? 1 : 0)}
                   />
@@ -341,6 +371,40 @@ export function OnboardingPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function OnboardingCupcake() {
+  return (
+    <svg width="170" height="170" viewBox="0 0 210 210" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="ubt-onb-wrapper" x1="58" y1="122" x2="152" y2="192" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F8D98A" />
+          <stop offset="1" stopColor="#F59E6B" />
+        </linearGradient>
+        <linearGradient id="ubt-onb-frosting" x1="58" y1="56" x2="152" y2="130" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FFFBF5" />
+          <stop offset="1" stopColor="#FFDDE8" />
+        </linearGradient>
+      </defs>
+      <ellipse cx="105" cy="196" rx="62" ry="9" fill="#2A0F19" opacity="0.35" />
+      <path d="M58 124h94l-11 56c-1.4 7-7.3 12-14.4 12H83.4c-7.1 0-13-5-14.4-12l-11-56Z" fill="url(#ubt-onb-wrapper)" />
+      <path d="M74 132l-6 46M98 132v50M122 132v50M146 132l6 46" stroke="#D9783F" strokeWidth="3.5" strokeLinecap="round" opacity="0.5" />
+      <path
+        d="M63 126c-2.8-11 4.8-20 15.6-20 3.2-11.5 16.4-17 25-9.4 8.6-7.6 21.8-2.1 25 9.4 10.8 0 18.4 9 15.6 20H63Z"
+        fill="url(#ubt-onb-frosting)"
+      />
+      <path d="M67 104c6-11 17-16 30-14M87 92c3-8 10-12 19-11M117 87c7-2 14 1 19 8" stroke="#F6B7C9" strokeWidth="3" strokeLinecap="round" opacity="0.9" />
+      <circle cx="105" cy="72" r="9.5" fill="#D9536B" />
+      <path d="M105 63c2.5-8 9-12.5 17-12.5" stroke="#3B2230" strokeWidth="3.2" strokeLinecap="round" />
+      <g strokeLinecap="round" strokeWidth="3">
+        <path d="M80 116l4-7" stroke="#58C99A" />
+        <path d="M95 124l3-6" stroke="#62B4E8" />
+        <path d="M113 117l-3-7" stroke="#F4C95D" />
+        <path d="M130 122l4-6" stroke="#A78BFA" />
+        <path d="M139 108l3-6" stroke="#F59E6B" />
+      </g>
+    </svg>
   )
 }
 

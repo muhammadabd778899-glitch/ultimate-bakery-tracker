@@ -149,6 +149,7 @@ export function seedSampleData(): { created: boolean } {
     ]
 
     let seq = 0
+    let batchSeq = 0
     for (const [custId, offset, status, orderType, deposit, , names] of orderSpecs) {
       seq++
       const id = uid('ord_')
@@ -216,7 +217,7 @@ export function seedSampleData(): { created: boolean } {
         for (const it of items) {
           if (!it.recipe_id) continue
           const batchId = uid('bat_')
-          const batchNo = `BAT-${new Date().getFullYear()}-${String(seq).padStart(4, '0')}`
+          const batchNo = `BAT-${new Date().getFullYear()}-${String(++batchSeq).padStart(4, '0')}`
           run(
             `INSERT INTO production_batches
               (id,batch_no,production_date,order_id,product_id,product_name,recipe_id,recipe_name,planned_qty,actual_qty,

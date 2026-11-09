@@ -542,7 +542,7 @@ function PlanProductionModal({
           <TextInput type="date" value={date} onChange={(e) => setDate(e.target.value)} />
         </Field>
         <label className="flex items-start gap-2.5 text-sm cursor-pointer">
-          <input type="checkbox" className="mt-0.5 accent-[#E8A3BA]" checked={onlyRecipe} onChange={(e) => setOnlyRecipe(e.target.checked)} />
+          <input type="checkbox" className="mt-0.5 accent-[#E35683]" checked={onlyRecipe} onChange={(e) => setOnlyRecipe(e.target.checked)} />
           <span>
             Only items with a linked recipe
             <span className="block text-[11.5px] text-muted">

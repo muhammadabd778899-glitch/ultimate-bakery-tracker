@@ -318,7 +318,7 @@ function WasteForm({ open, onClose, onSaved }: { open: boolean; onClose: () => v
 
         {form.waste_type === 'ingredient' && ing && (
           <label className="flex items-start gap-2.5 text-sm cursor-pointer">
-            <input type="checkbox" className="mt-0.5 accent-[#E8A3BA]" checked={form.deduct_stock} onChange={(e) => set('deduct_stock', e.target.checked)} />
+            <input type="checkbox" className="mt-0.5 accent-[#E35683]" checked={form.deduct_stock} onChange={(e) => set('deduct_stock', e.target.checked)} />
             <span>
               Deduct {form.quantity} {ing.purchase_unit} from stock
               <span className="block text-[11.5px] text-muted">

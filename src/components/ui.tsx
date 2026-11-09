@@ -16,7 +16,10 @@ export function PageHeader({
   return (
     <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
       <div>
-        <h1 className="font-display text-[26px] leading-tight text-ink">{title}</h1>
+        <h1 className="font-display text-[27px] leading-tight text-ink">
+          <span className="inline-block w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[#F4C95D] via-[#F1789E] to-[#C93E6B] mr-2.5 align-middle shadow-[0_2px_8px_rgba(227,86,131,0.35)]" />
+          {title}
+        </h1>
         {subtitle && <p className="text-sm text-muted mt-1">{subtitle}</p>}
       </div>
       {actions && <div className="flex items-center gap-2 flex-wrap">{actions}</div>}
@@ -29,17 +32,28 @@ export function Card({
   className = '',
   title,
   action,
+  icon,
+  accent = 'from-[#FFE1EA] to-[#FFF6EC] text-[#C93E6B]',
 }: {
   children: React.ReactNode
   className?: string
   title?: string
   action?: React.ReactNode
+  icon?: React.ReactNode
+  accent?: string
 }) {
   return (
     <section className={`card ${className}`}>
       {(title || action) && (
-        <header className="flex items-center justify-between px-5 py-3.5 border-b border-line">
-          <h3 className="section-title">{title}</h3>
+        <header className="flex items-center justify-between gap-3 px-5 py-3.5 border-b border-line">
+          <div className="flex items-center gap-2.5 min-w-0">
+            {icon && (
+              <span className={`w-8 h-8 rounded-xl grid place-items-center bg-gradient-to-br ${accent} shadow-sm shrink-0`}>
+                {icon}
+              </span>
+            )}
+            <h3 className="section-title truncate">{title}</h3>
+          </div>
           {action}
         </header>
       )}
@@ -219,11 +233,11 @@ type Tone = 'neutral' | 'pink' | 'success' | 'warning' | 'danger' | 'info'
 
 const TONES: Record<Tone, string> = {
   neutral: 'bg-surface text-muted',
-  pink: 'bg-pink-100 text-pink-700',
-  success: 'bg-[#EAF4EE] text-[#4C7C61]',
-  warning: 'bg-[#FCF1E1] text-[#9A6A28]',
-  danger: 'bg-[#FBEAEB] text-[#A9505A]',
-  info: 'bg-pink-100 text-pink-700',
+  pink: 'bg-[#FFE1EA] text-[#A62F55]',
+  success: 'bg-[#E4F6EC] text-[#2F7A56]',
+  warning: 'bg-[#FFF2D4] text-[#96620F]',
+  danger: 'bg-[#FFE4E4] text-[#A63847]',
+  info: 'bg-[#E4F2FC] text-[#2A6F9B]',
 }
 
 export function Badge({ tone = 'neutral', children }: { tone?: Tone; children: React.ReactNode }) {
@@ -280,7 +294,7 @@ export function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center text-center py-14 px-6">
-      <div className="w-16 h-16 rounded-2xl bg-pink-100 text-pink-500 flex items-center justify-center mb-4">
+      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FFE1EA] via-[#FFF3E6] to-[#EAF8F0] text-pink-500 flex items-center justify-center mb-4 shadow-sm">
         {icon ?? <Inbox size={26} />}
       </div>
       <p className="empty-title">{title}</p>
@@ -292,7 +306,12 @@ export function EmptyState({
 
 export function ProgressBar({ value, max = 100, tone = 'pink' }: { value: number; max?: number; tone?: 'pink' | 'success' | 'warning' }) {
   const pctv = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0
-  const color = tone === 'success' ? 'bg-ok' : tone === 'warning' ? 'bg-warn' : 'bg-pink-400'
+  const color =
+    tone === 'success'
+      ? 'bg-gradient-to-r from-[#9CE2C4] to-[#3FA372]'
+      : tone === 'warning'
+        ? 'bg-gradient-to-r from-[#F8D98A] to-[#E7A13B]'
+        : 'bg-gradient-to-r from-[#FBA3BE] to-[#C93E6B]'
   return (
     <div className="h-1.5 w-full rounded-full bg-pink-100 overflow-hidden">
       <div className={`h-full rounded-full ${color} transition-all`} style={{ width: `${pctv}%` }} />
